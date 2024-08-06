@@ -1,11 +1,37 @@
-/*
- * @Author: oldtimestj 85237486@qq.com
- * @Date: 2024-08-05 16:01:28
- * @LastEditors: oldtimestj 85237486@qq.com
- * @LastEditTime: 2024-08-05 16:01:41
- * @FilePath: /nextjs-dashboard/app/dashboard/page.tsx
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- */
-export default function Page() {
-  return <p>Dashboard Page</p>;
+import { Card } from '@/app/ui/dashboard/cards';
+import RevenueChart from '@/app/ui/dashboard/revenue-chart';
+import LatestInvoices from '@/app/ui/dashboard/latest-invoices';
+import { lusitana } from '@/app/ui/fonts';
+import {
+  fetchRevenue,
+  fetchLatestInvoices,
+  fetchCardData,
+} from '@/app/lib/data';
+
+export default async function Page() {
+  const revenue = await fetchRevenue();
+  const latestInvoices = await fetchLatestInvoices();
+  const {
+    numberOfCustomers,
+    numberOfInvoices,
+    totalPaidInvoices,
+    totalPendingInvoices,
+  } = await fetchCardData();
+  return (
+    <main>
+      <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
+        仪表板
+      </h1>
+      <div className='grid gap-6 sm:grid-cols-2 lg:grid-cols-4'>
+        {<Card title='已收款' value={totalPaidInvoices} type='collected' />}
+        {<Card title='待处理' value={totalPendingInvoices} type='pending' />}
+        {<Card title='总发票数' value={numberOfInvoices} type='invoices' />}
+        {<Card title='总客户数' value={numberOfCustomers} type='customers' />}
+      </div>
+      <div className='mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8'>
+        <RevenueChart revenue={revenue} />
+        <LatestInvoices latestInvoices={latestInvoices} />
+      </div>
+    </main>
+  );
 }
