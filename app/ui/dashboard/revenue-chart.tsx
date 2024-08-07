@@ -2,14 +2,14 @@
  * @Author: oldtimestj 85237486@qq.com
  * @Date: 2024-07-07 00:56:38
  * @LastEditors: oldtimestj 85237486@qq.com
- * @LastEditTime: 2024-08-06 15:27:06
+ * @LastEditTime: 2024-08-07 16:35:43
  * @FilePath: /nextjs-dashboard/app/ui/dashboard/revenue-chart.tsx
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 import { generateYAxis } from '@/app/lib/utils';
 import { CalendarIcon } from '@heroicons/react/24/outline';
 import { lusitana } from '@/app/ui/fonts';
-import { Revenue } from '@/app/lib/definitions';
+import { fetchRevenue } from '@/app/lib/data';
 
 // This component is representational only.
 // For data visualization UI, check out:
@@ -17,11 +17,8 @@ import { Revenue } from '@/app/lib/definitions';
 // https://www.chartjs.org/
 // https://airbnb.io/visx/
 
-export default async function RevenueChart({
-  revenue,
-}: {
-  revenue: Revenue[];
-}) {
+export default async function RevenueChart() {
+  const revenue = await fetchRevenue();
   const chartHeight = 350;
   // NOTE: Uncomment this code in Chapter 7
 

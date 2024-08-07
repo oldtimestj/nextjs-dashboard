@@ -2,7 +2,7 @@
  * @Author: oldtimestj 85237486@qq.com
  * @Date: 2024-07-07 00:56:38
  * @LastEditors: oldtimestj 85237486@qq.com
- * @LastEditTime: 2024-08-06 15:31:00
+ * @LastEditTime: 2024-08-07 16:35:35
  * @FilePath: /nextjs-dashboard/app/ui/dashboard/latest-invoices.tsx
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -10,12 +10,9 @@ import { ArrowPathIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import Image from 'next/image';
 import { lusitana } from '@/app/ui/fonts';
-import { LatestInvoice } from '@/app/lib/definitions';
-export default async function LatestInvoices({
-  latestInvoices,
-}: {
-  latestInvoices: LatestInvoice[];
-}) {
+import { fetchLatestInvoices } from '@/app/lib/data';
+export default async function LatestInvoices() {
+  const latestInvoices = await fetchLatestInvoices();
   return (
     <div className='flex w-full flex-col md:col-span-4'>
       <h2 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
